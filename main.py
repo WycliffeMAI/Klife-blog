@@ -15,8 +15,8 @@ import os
 
 app = Flask(__name__)
 load_dotenv()
-app.config['SECRET_KEY'] = os.environ.get("DATABASE_URL",  "sqlite:///blog.db")
-personal_access_token_GitHub = os.getenv("personal_access_token_GitHub")
+app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
+# personal_access_token_GitHub = os.getenv("personal_access_token_GitHub")
 ckeditor = CKEditor(app)
 Bootstrap(app)
 
@@ -152,7 +152,6 @@ def show_post(post_id):
     form = CommentForm()
     if form.validate_on_submit():
         if current_user.is_authenticated:
-            print("yesssssssssssss")
             comment = Comment(
                 comment=form.comment_text.data,
                 comment_poster=current_user.id,
