@@ -15,7 +15,7 @@ import os
 
 app = Flask(__name__)
 load_dotenv()
-app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
+app.config['SECRET_KEY'] = os.environ.get("DATABASE_URL",  "sqlite:///blog.db")
 personal_access_token_GitHub = os.getenv("personal_access_token_GitHub")
 ckeditor = CKEditor(app)
 Bootstrap(app)
