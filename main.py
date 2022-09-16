@@ -14,10 +14,11 @@ from flask_gravatar import Gravatar
 import os
 
 app = Flask(__name__)
+load_dotenv()
 app.config['SECRET_KEY'] = os.getenv("app.config['SECRET_KEY']")
+personal_access_token_GitHub = os.getenv("personal_access_token_GitHub")
 ckeditor = CKEditor(app)
 Bootstrap(app)
-load_dotenv()
 
 # CONNECT TO DB
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
@@ -37,8 +38,6 @@ gravatar = Gravatar(
     use_ssl=False,
     base_url=None
 )
-
-personal_access_token_GitHub = os.getenv("personal_access_token_GitHub")
 
 
 @login_manager.user_loader
