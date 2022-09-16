@@ -1,4 +1,5 @@
 from functools import wraps
+from dotenv import load_dotenv
 
 from flask import Flask, render_template, redirect, url_for, flash, abort
 from flask_bootstrap import Bootstrap
@@ -10,11 +11,13 @@ from sqlalchemy.orm import relationship
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
 from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm
 from flask_gravatar import Gravatar
+import os
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
+app.config['SECRET_KEY'] = os.getenv("app.config['SECRET_KEY']")
 ckeditor = CKEditor(app)
 Bootstrap(app)
+load_dotenv()
 
 # CONNECT TO DB
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
@@ -35,8 +38,8 @@ gravatar = Gravatar(
     base_url=None
 )
 
+personal_access_token_GitHub = os.getenv("personal_access_token_GitHub")
 
-personal_access_token_GitHub = "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"
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -180,7 +183,6 @@ def contact():
 def add_new_post():
     form = CreatePostForm()
     if form.validate_on_submit():
-        # author = current_user.id
         new_post = BlogPost(
             title=form.title.data,
             subtitle=form.subtitle.data,
