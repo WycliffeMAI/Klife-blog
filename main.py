@@ -74,8 +74,8 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100))
     name = db.Column(db.String(1000))
-    # posts = db.relationship("BlogPost", backref="author")
-    # comments = db.relationship("Comment", backref="comment_author")
+    posts = db.relationship("BlogPost", backref="author")
+    comments = db.relationship("Comment", backref="comment_author")
 
 
 class BlogPost(db.Model):
@@ -86,8 +86,8 @@ class BlogPost(db.Model):
     date = db.Column(db.String(250), nullable=False)
     body = db.Column(db.Text, nullable=False)
     img_url = db.Column(db.String(250), nullable=False)
-    # author_id = db.Column(db.Integer, db.ForeignKey("users.id"))
-    # comments = db.relationship("Comment", backref="parent_post")
+    author_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    comments = db.relationship("Comment", backref="parent_post")
 
 
 class Comment(UserMixin, db.Model):
@@ -95,11 +95,11 @@ class Comment(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     comment = db.Column(db.Text, nullable=False)
     
-    # comment_poster = db.Column(db.Integer, db.ForeignKey("users.id"))
-    # post_commented = db.Column(db.Integer, db.ForeignKey("blog_posts.id"))
+    comment_poster = db.Column(db.Integer, db.ForeignKey("users.id"))
+    post_commented = db.Column(db.Integer, db.ForeignKey("blog_posts.id"))
 
 
-# db.create_all()
+db.create_all()
 
 
 @app.route('/')
