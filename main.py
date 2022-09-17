@@ -99,7 +99,7 @@ class Comment(UserMixin, db.Model):
     post_commented = db.Column(db.Integer, db.ForeignKey("blog_posts.id"))
 
 
-db.create_all()
+# db.create_all()
 
 
 @app.route('/')
