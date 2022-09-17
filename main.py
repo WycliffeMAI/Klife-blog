@@ -15,7 +15,11 @@ import os
 
 app = Flask(__name__)
 load_dotenv()
-app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
+key_ = os.environ.get("SECRET_KEY")
+if key_:
+    app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
+else:
+    app.config['SECRET_KEY'] = os.getenv("app.config['SECRET_KEY']")
 # personal_access_token_GitHub = os.getenv("personal_access_token_GitHub")
 ckeditor = CKEditor(app)
 Bootstrap(app)
